@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NPB 球団詳細</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 24px;
+      line-height: 1.6;
+    }
+    .meta {
+      color: #666;
+      margin-bottom: 12px;
+    }
+    a {
+      word-break: break-all;
+    }
+    .section {
+      margin-top: 24px;
+    }
+    .highlight {
+      padding: 10px 14px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      background: #f7f7f7;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <p><a href="./index.html">← 一覧に戻る</a></p>
+
+  <h1 id="name"></h1>
+  <div class="meta" id="category"></div>
+
+  <div class="section">
+    <h2>概要</h2>
+    <p id="summary"></p>
+  </div>
+
+  <div class="section">
+    <h2>詳細</h2>
+    <p id="detail"></p>
+  </div>
+
+  <div class="section">
+    <h2>日本一（日本シリーズ優勝）</h2>
+    <p id="champ" class="highlight"></p>
+  </div>
+
+  <div class="section" id="linkWrap" style="display:none;">
+    <h2>参考リンク</h2>
+    <a id="link" target="_blank" rel="noreferrer"></a>
+  </div>
+
+  <script>
+    const appName = "npb";
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+
+    const nameEl = document.getElementById("name");
+    const categoryEl = document.getElementById("category");
+    const summaryEl = document.getElementById("summary");
+    const detailEl = document.getElementById("detail");
+    const champEl = document.getElementById("champ");
+    const linkWrap = document.getElementById("linkWrap");
+    const linkEl = document.getElementById("link");
+
+    if (!id) {
+      nameEl.textContent = "IDが指定されていません";
+      summaryEl.textContent = "";
+      detailEl.textContent = "URL に ?id=... が必要です。";
+      champEl.textContent = "";
+    } else {
+      fetch(`/api/${appName}/items/${encodeURIComponent(id)}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Not found");
+          return res.json();
+        })
+        .then(it => {
+          nameEl.textContent = it.name ?? "";
+          categoryEl.textContent =
+            it.category ? `リーグ：${it.category} ／ ID=${it.id}` : `ID=${it.id}`;
+
+          summaryEl.textContent = it.summary ?? "";
+          detailEl.textContent = it.detail ?? "";
+
+          // ★ 追加項目：最後に日本一になった年
+          if (it.lastChampionYear) {
+            champEl.textContent = `最後に日本一になった年：${it.lastChampionYear}年`;
+          } else {
+            champEl.textContent = "日本一の記録は登録されていません。";
+          }
+
+          if (it.link) {
+            linkEl.href = it.link;
+            linkEl.textContent = it.link;
+            linkWrap.style.display = "block";
+          }
+        })
+        .catch(err => {
+          nameEl.textContent = "読み込みに失敗しました";
+          summaryEl.textContent = "";
+          detailEl.textContent =
+            "IDが存在しない、または server.js が起動していない可能性があります。";
+          champEl.textContent = "";
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

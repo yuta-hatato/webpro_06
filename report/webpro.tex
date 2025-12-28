@@ -1,0 +1,267 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+
+% --- 日本語フォント/欧文・数式 ---
+\usepackage[uplatex,deluxe]{otf} % 日本語フォント拡張（uplatex）
+\usepackage[noalphabet]{pxchfon} % otfの後
+\usepackage{stix2}               % 欧文＆数式フォント
+\usepackage[fleqn,tbtags]{mathtools}
+
+% --- 図表・配置 ---
+\usepackage{graphicx}
+\usepackage{here}
+\usepackage{tabularx}
+
+% --- ソースコード ---
+\usepackage{listings}
+
+% --- PDF/リンク ---
+\usepackage[dvipdfmx,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+]{hyperref}
+\usepackage{pxjahyper} % hyperrefの後（日本語しおり対策）
+
+% listings（ソースコード表示）の設定
+\lstset{
+  basicstyle={\ttfamily\small},
+  identifierstyle={\small},
+  commentstyle={\small\itshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+% --- タイトル情報 ---
+\title{一覧表示をベースとしたWebアプリケーションの作成（3テーマ）\\仕様書（利用者向け／管理者向け／技術者向け）}
+\author{25G1107 畑戸悠太}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+%========================================================
+\section{リポジトリ}
+本課題のソースコードは GitHub 上のリポジトリで管理する．提出時点では未登録のため，後日 URL を追記する．
+
+\begin{itemize}
+  \item リポジトリURL：\url{https://github.com/XXXX/XXXX}（後日追記）
+\end{itemize}
+
+\subsection*{動作環境（共通）}
+本アプリケーションは Node.js（Express）を用いた簡易APIサーバと，静的HTML（JavaScript）で構成される．
+\begin{itemize}
+  \item Node.js：18以上（目安）
+  \item ブラウザ：Chrome / Edge / Safari 等のモダンブラウザ
+  \item 起動：\texttt{node server.js}（\texttt{http://localhost:3000}）
+\end{itemize}
+
+%========================================================
+\section{千葉県市町村一覧（利用者向け仕様書）}
+\subsection{概要}
+千葉県内の市町村（市・町・村）を一覧表示し，クリックで詳細ページを閲覧できるWebアプリケーションである．
+検索や区分（市・町・村）による絞り込みにより，目的の自治体を素早く探せる．
+
+\subsection{利用方法}
+\begin{enumerate}
+  \item ブラウザで \texttt{/chiba/index.html} を開く．
+  \item 画面上部の検索欄にキーワード（例：``佐倉''，``町''）を入力する．
+  \item 区分（市・町・村）で絞り込みたい場合はプルダウンを選択する（実装している場合）．
+  \item 一覧の自治体名をクリックすると \texttt{/chiba/detail.html?id=...} に遷移し，詳細を確認できる．
+\end{enumerate}
+
+\subsection{画面構成}
+\begin{itemize}
+  \item 一覧画面（index）：自治体名／区分／概要を表示し，詳細へ遷移できる．
+  \item 詳細画面（detail）：概要・詳細本文・参考リンク・画像（任意）を表示する．
+\end{itemize}
+
+\subsection{特徴（工夫点：山武市の強調表示）}
+本アプリでは，特定の自治体（例：山武市）を目立たせるために，一覧画面でもカード装飾やラベル表示などにより強調している．
+詳細画面では画像表示や長文説明により，情報量の差を視覚的に伝える．
+
+% --- ここに「千葉 一覧画面」のスクリーンショットを入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/chiba_index.png}
+%   \caption{千葉県市町村一覧（index画面）}
+% \end{figure}
+
+% --- ここに「山武市 詳細画面」のスクリーンショットを入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/chiba_sammu_detail.png}
+%   \caption{山武市の詳細表示（detail画面）}
+% \end{figure}
+
+%========================================================
+\section{千葉県市町村一覧（管理者向け仕様書）}
+\subsection{管理対象}
+管理者は，表示する自治体データ（JSON）および画像ファイルを管理する．
+\begin{itemize}
+  \item データ：\texttt{chiba-municipalities/items.json}
+  \item 画面：\texttt{public/chiba/index.html}, \texttt{public/chiba/detail.html}
+  \item 画像：\texttt{public/chiba/images/}（推奨）
+\end{itemize}
+
+\subsection{データ更新手順}
+\begin{enumerate}
+  \item \texttt{chiba-municipalities/items.json} を編集する．
+  \item 各項目は \texttt{id, name, category, summary, detail, link} を持つ（必要に応じて追加項目も可）．
+  \item サーバを再起動する（またはリロードで反映する）．
+\end{enumerate}
+
+\subsection{画像の追加}
+自治体ごとに画像を表示する場合は，\texttt{public/chiba/images/} に画像を置き，JSONの \texttt{image} 等のキーで参照する方式を推奨する．
+（例：\texttt{image: "/chiba/images/sammu.png"}）
+
+% --- ここに「管理のための items.json 編集例」の図を入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/chiba_items_json.png}
+%   \caption{items.json の編集例}
+% \end{figure}
+
+\subsection{起動・停止}
+\begin{itemize}
+  \item 起動：\texttt{node server.js}
+  \item 停止：ターミナルで \texttt{Ctrl + C}
+\end{itemize}
+
+\subsection{トラブルシュート}
+\begin{itemize}
+  \item 画面が真っ白：\texttt{server.js} が起動しているか確認する．
+  \item 一覧が出ない：\texttt{/api/chiba/items} がJSONを返すか確認する．
+  \item 詳細が出ない：\texttt{id} がJSON内に存在するか確認する．
+\end{itemize}
+
+%========================================================
+\section{千葉県市町村一覧（技術者向け仕様書）}
+\subsection{システム構成}
+\begin{itemize}
+  \item サーバ：Node.js + Express
+  \item API：\texttt{/api/chiba/items}, \texttt{/api/chiba/items/:id}
+  \item フロント：\texttt{public/chiba/index.html}, \texttt{public/chiba/detail.html}
+  \item データ：\texttt{chiba-municipalities/items.json}
+\end{itemize}
+
+\subsection{ディレクトリ設計意図}
+\begin{itemize}
+  \item \texttt{public/} は静的配信対象（ブラウザから直接参照される）．
+  \item \texttt{*-municipalities/} はデータ置き場（サーバが読み込む）．
+  \item ``一覧表示ベース'' の要件に対し，\textbf{一覧（index）→詳細（detail）}の2画面構成を統一した．
+\end{itemize}
+
+\subsection{API仕様}
+\paragraph{一覧取得}
+\texttt{GET /api/chiba/items}
+\begin{itemize}
+  \item レスポンス：items.json の配列
+\end{itemize}
+
+\paragraph{詳細取得}
+\texttt{GET /api/chiba/items/:id}
+\begin{itemize}
+  \item パス：\texttt{id} は数値
+  \item レスポンス：一致する1件のJSON
+\end{itemize}
+
+\subsection{フロント実装の要点}
+\begin{itemize}
+  \item \texttt{fetch()} でAPIからJSONを取得し，DOMに反映する．
+  \item 一覧の各要素は \texttt{detail.html?id=...} の形式で遷移する．
+  \item 特定条件（例：\texttt{id==35} の山武市）でクラス付与し，CSSで強調できる．
+\end{itemize}
+
+\subsection{server.js（抜粋）}
+% --- 必要に応じて、実際の server.js を貼る（コメントアウト例） ---
+% \begin{lstlisting}[language=JavaScript,caption={server.js（抜粋）}]
+% // ここに server.js の該当部分
+% \end{lstlisting}
+
+%========================================================
+\section{千葉工大施設一覧（利用者向け仕様書）}
+\subsection{概要}
+千葉工業大学（対象キャンパス）の施設情報を一覧表示し，クリックで詳細を閲覧できるWebアプリケーションである．
+学内施設の名称と概要を簡潔に確認できることを目的とする．
+
+\subsection{利用方法}
+\begin{enumerate}
+  \item ブラウザで \texttt{/cit/index.html} を開く．
+  \item 施設名をクリックして詳細画面へ遷移する．
+  \item 必要に応じて検索欄から絞り込む（実装している場合）．
+\end{enumerate}
+
+\subsection{画面構成}
+\begin{itemize}
+  \item 一覧画面（index）
+  \item 詳細画面（detail）
+\end{itemize}
+
+% --- ここに「CIT 一覧画面」のスクリーンショットを入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/cit_index.png}
+%   \caption{千葉工大施設一覧（index画面）}
+% \end{figure}
+
+%========================================================
+\section{NPB球団一覧（利用者向け仕様書）}
+\subsection{概要}
+NPB（12球団）を一覧表示し，クリックで詳細ページを閲覧できるWebアプリケーションである．
+球団名・所属リーグ・概要に加え，\textbf{最後に日本一になった年}などの情報を表示する．
+
+\subsection{利用方法}
+\begin{enumerate}
+  \item ブラウザで \texttt{/npb/index.html} を開く．
+  \item 検索欄で球団名やリーグ名を入力し，絞り込む．
+  \item 球団名をクリックすると詳細画面へ遷移する．
+\end{enumerate}
+
+\subsection{画面構成}
+\begin{itemize}
+  \item 一覧画面（index）：検索・リーグ絞り込み・日本一年度表示
+  \item 詳細画面（detail）：概要・詳細・参考リンク・日本一年度（強調表示）
+\end{itemize}
+
+% --- ここに「NPB 一覧画面」のスクリーンショットを入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/npb_index.png}
+%   \caption{NPB球団一覧（index画面）}
+% \end{figure}
+
+% --- ここに「NPB 詳細画面」のスクリーンショットを入れる（コメントアウト） ---
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{images/npb_detail.png}
+%   \caption{NPB球団詳細（detail画面）}
+% \end{figure}
+
+\subsection{備考（データの出典について）}
+最後に日本一になった年は外部資料の結果表等を参考に入力した．
+（提出時は，参照元URL等を追記する．）
+
+%========================================================
+\section*{付録：提出物}
+\begin{itemize}
+  \item PDF：\texttt{wpro2025.pdf}
+  \item 内容：本書（仕様書：千葉は3部，CIT/NPBは利用者向けのみ）
+\end{itemize}
+
+\end{document}

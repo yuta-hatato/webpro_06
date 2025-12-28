@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>施設詳細</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    .meta { color: #666; }
+    a { word-break: break-all; }
+  </style>
+</head>
+<body>
+  <p><a href="./index.html">← 一覧に戻る</a></p>
+
+  <h1 id="name" style="margin-bottom: 6px;"></h1>
+  <div class="meta" id="category"></div>
+
+  <h2>概要</h2>
+  <p id="summary"></p>
+
+  <h2>詳細</h2>
+  <p id="detail"></p>
+
+  <p id="linkWrap" style="display:none;">
+    参考リンク：<a id="link" target="_blank" rel="noreferrer"></a>
+  </p>
+
+  <script>
+    const appName = "cit";
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+
+    const nameEl = document.getElementById("name");
+    const categoryEl = document.getElementById("category");
+    const summaryEl = document.getElementById("summary");
+    const detailEl = document.getElementById("detail");
+    const linkWrap = document.getElementById("linkWrap");
+    const linkEl = document.getElementById("link");
+
+    if (!id) {
+      nameEl.textContent = "IDが指定されていません";
+      detailEl.textContent = "URL に ?id=... が必要です。";
+    } else {
+      fetch(`/api/${appName}/items/${encodeURIComponent(id)}`)
+        .then(r => {
+          if (!r.ok) throw new Error("Not found");
+          return r.json();
+        })
+        .then(it => {
+          nameEl.textContent = it.name ?? "";
+          categoryEl.textContent = it.category ? `カテゴリ：${it.category} / ID=${it.id}` : `ID=${it.id}`;
+          summaryEl.textContent = it.summary ?? "";
+          detailEl.textContent = it.detail ?? "";
+
+          if (it.link) {
+            linkEl.href = it.link;
+            linkEl.textContent = it.link;
+            linkWrap.style.display = "block";
+          }
+        })
+        .catch(err => {
+          nameEl.textContent = "読み込みに失敗しました";
+          detailEl.textContent = "IDが存在しない、または server.js が起動していない可能性があります。";
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

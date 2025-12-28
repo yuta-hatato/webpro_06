@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}リポジトリ}{3}{section.1}%
+\contentsline {section}{\numberline {2}千葉県市町村一覧（利用者向け仕様書）}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}概要}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}利用方法}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}画面構成}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}特徴（工夫点：山武市の強調表示）}{3}{subsection.2.4}%
+\contentsline {section}{\numberline {3}千葉県市町村一覧（管理者向け仕様書）}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}管理対象}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}データ更新手順}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}画像の追加}{4}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}起動・停止}{4}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}トラブルシュート}{4}{subsection.3.5}%
+\contentsline {section}{\numberline {4}千葉県市町村一覧（技術者向け仕様書）}{4}{section.4}%
+\contentsline {subsection}{\numberline {4.1}システム構成}{4}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}ディレクトリ設計意図}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}API仕様}{5}{subsection.4.3}%
+\contentsline {paragraph}{一覧取得}{5}{section*.3}%
+\contentsline {paragraph}{詳細取得}{5}{section*.4}%
+\contentsline {subsection}{\numberline {4.4}フロント実装の要点}{5}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}server.js（抜粋）}{5}{subsection.4.5}%
+\contentsline {section}{\numberline {5}千葉工大施設一覧（利用者向け仕様書）}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}概要}{5}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}利用方法}{5}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}画面構成}{5}{subsection.5.3}%
+\contentsline {section}{\numberline {6}NPB球団一覧（利用者向け仕様書）}{6}{section.6}%
+\contentsline {subsection}{\numberline {6.1}概要}{6}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}利用方法}{6}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}画面構成}{6}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}備考（データの出典について）}{6}{subsection.6.4}%

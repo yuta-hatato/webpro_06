@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "読売ジャイアンツ",
+    "category": "セ・リーグ",
+    "summary": "本拠地：東京ドーム。日本プロ野球を代表する伝統球団。",
+    "detail": "1934年創設。全国的な人気と長い歴史を持つ球団で、数多くの名選手を輩出してきた。",
+    "lastChampionYear": 2012,
+    "link": "https://www.giants.jp/"
+  },
+  {
+    "id": 2,
+    "name": "阪神タイガース",
+    "category": "セ・リーグ",
+    "summary": "本拠地：阪神甲子園球場。熱狂的なファンで知られる球団。",
+    "detail": "1935年創設。関西を代表する球団で、甲子園球場を本拠地とする。",
+    "lastChampionYear": 2023,
+    "link": "https://hanshintigers.jp/"
+  },
+  {
+    "id": 3,
+    "name": "中日ドラゴンズ",
+    "category": "セ・リーグ",
+    "summary": "本拠地：バンテリンドーム ナゴヤ。",
+    "detail": "名古屋を拠点とする球団。堅実な野球スタイルが特徴。",
+    "lastChampionYear": 2007,
+    "link": "https://dragons.jp/"
+  },
+  {
+    "id": 4,
+    "name": "広島東洋カープ",
+    "category": "セ・リーグ",
+    "summary": "本拠地：マツダスタジアム。市民球団として知られる。",
+    "detail": "広島市を拠点とし、地域密着型の運営を行う球団。",
+    "lastChampionYear": 1984,
+    "link": "https://www.carp.co.jp/"
+  },
+  {
+    "id": 5,
+    "name": "横浜DeNAベイスターズ",
+    "category": "セ・リーグ",
+    "summary": "本拠地：横浜スタジアム。",
+    "detail": "横浜を本拠地とする球団。近年は若手中心のチーム作りが進む。",
+    "lastChampionYear": 2024,
+    "link": "https://www.baystars.co.jp/"
+  },
+  {
+    "id": 6,
+    "name": "東京ヤクルトスワローズ",
+    "category": "セ・リーグ",
+    "summary": "本拠地：明治神宮野球場。",
+    "detail": "神宮球場を本拠地とし、攻撃力のある野球が特徴。",
+    "lastChampionYear": 2021,
+    "link": "https://www.yakult-swallows.co.jp/"
+  },
+  {
+    "id": 7,
+    "name": "福岡ソフトバンクホークス",
+    "category": "パ・リーグ",
+    "summary": "本拠地：みずほPayPayドーム福岡。",
+    "detail": "近年のパ・リーグを代表する強豪球団。",
+    "lastChampionYear": 2025,
+    "link": "https://www.softbankhawks.co.jp/"
+  },
+  {
+    "id": 8,
+    "name": "北海道日本ハムファイターズ",
+    "category": "パ・リーグ",
+    "summary": "本拠地：エスコンフィールドHOKKAIDO。",
+    "detail": "北海道を拠点とする球団。育成に定評がある。",
+    "lastChampionYear": 2016,
+    "link": "https://www.fighters.co.jp/"
+  },
+  {
+    "id": 9,
+    "name": "千葉ロッテマリーンズ",
+    "category": "パ・リーグ",
+    "summary": "本拠地：ZOZOマリンスタジアム。",
+    "detail": "千葉県を本拠地とする球団。応援文化が特徴。",
+    "lastChampionYear": 2010,
+    "link": "https://www.marines.co.jp/"
+  },
+  {
+    "id": 10,
+    "name": "東北楽天ゴールデンイーグルス",
+    "category": "パ・リーグ",
+    "summary": "本拠地：楽天モバイルパーク宮城。",
+    "detail": "東北地方初のプロ野球球団。",
+    "lastChampionYear": 2013,
+    "link": "https://www.rakuteneagles.jp/"
+  },
+  {
+    "id": 11,
+    "name": "オリックス・バファローズ",
+    "category": "パ・リーグ",
+    "summary": "本拠地：京セラドーム大阪。",
+    "detail": "大阪を拠点とする球団。近年黄金期を迎えた。",
+    "lastChampionYear": 2022,
+    "link": "https://www.buffaloes.co.jp/"
+  },
+  {
+    "id": 12,
+    "name": "埼玉西武ライオンズ",
+    "category": "パ・リーグ",
+    "summary": "本拠地：ベルーナドーム。",
+    "detail": "埼玉県所沢市を本拠地とする名門球団。",
+    "lastChampionYear": 2008,
+    "link": "https://www.seibulions.jp/"
+  }
+]

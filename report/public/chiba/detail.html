@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>市町村詳細</title>
+
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+
+    .meta { color: #666; }
+
+    .sammu-hero{
+      border: 5px dashed #000;
+      background: #ffecec;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .sammu-image{
+      max-width: 100%;
+      margin: 18px 0;
+      border-radius: 14px;
+      border: 3px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <p><a href="./index.html">← 一覧に戻る</a></p>
+
+  <div id="wrap">
+    <h1 id="name"></h1>
+    <div id="category" class="meta"></div>
+
+    <img id="sammuImg" class="sammu-image" style="display:none;">
+
+    <h2>概要</h2>
+    <p id="summary"></p>
+
+    <h2>詳細</h2>
+    <p id="detail"></p>
+
+    <p id="linkWrap" style="display:none;">
+      参考リンク：<a id="link" target="_blank"></a>
+    </p>
+  </div>
+
+  <script>
+    const appName = "chiba";
+    const id = new URLSearchParams(location.search).get("id");
+
+    fetch(`/api/${appName}/items/${id}`)
+      .then(r => r.json())
+      .then(it => {
+        document.getElementById("name").textContent = it.name;
+        document.getElementById("category").textContent =
+          `区分：${it.category} ／ ID=${it.id}`;
+        document.getElementById("summary").textContent = it.summary;
+        document.getElementById("detail").textContent = it.detail;
+
+        if(it.link){
+          const a = document.getElementById("link");
+          a.href = it.link;
+          a.textContent = it.link;
+          document.getElementById("linkWrap").style.display = "block";
+        }
+
+        /* 山武市だけ特集 */
+        if(Number(it.id) === 35){
+          document.getElementById("wrap").classList.add("sammu-hero");
+          const img = document.getElementById("sammuImg");
+          img.src = "/images/sammu.jpg";
+          img.alt = "山武市の風景";
+          img.style.display = "block";
+          document.title = "【特集】山武市 詳細";
+        }
+      });
+  </script>
+</body>
+</html>
